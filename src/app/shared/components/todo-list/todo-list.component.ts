@@ -1,32 +1,76 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TodoItem } from '../../models/todoItem';
+import { CommonModule } from '@angular/common';
+import { TodoCardComponent } from '../todo-card/todo-card.component';
 
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule, CommonModule,TodoCardComponent],
   templateUrl: './todo-list.component.html',
-  styleUrl: './todo-list.component.scss'
+  styleUrls: ['./todo-list.component.scss'],
 })
-export class TodoListComponent {
-
+export class TodoListComponent implements OnInit {
   todo: string = '';
-  todoList: string[] = [];
+  todoList: TodoItem[] = [];
+  apiUrl: string = 'https://jsonplaceholder.typicode.com/todos'; // API URL
 
+  constructor(private httpClient: HttpClient) {}
+
+  ngOnInit() {
+    this.fetchTodos();
+  }
+
+  // GET ile todos'ları çekme
+  fetchTodos() {
+    this.httpClient
+      .get<TodoItem[]>(this.apiUrl)
+      .subscribe({
+        next: (response: TodoItem[]) => {
+          this.todoList = response.slice(0, 20);
+        },
+        error: (err: any) => {
+          console.log('HATA', err);
+        },
+        complete: () => {
+          console.log('İstek başarılı bitti');
+        },
+      });
+  }
+
+  // POST işlemi - Yeni todo ekleme
   addTodo() {
     const trimmedTodo = this.todo.trim();
     if (!trimmedTodo) {
-      alert("Todo cannot be empty!");
-    } else if (this.todoList.includes(trimmedTodo)) {
-      alert("This todo already exists!");
+      alert("Todo boş olamaz!");
     } else {
-      this.todoList.push(trimmedTodo);
-      this.todo = '';
+      const newTodo = {
+        title: trimmedTodo,
+        completed: false,
+        userId: 1,
+      };
+
+      // POST isteği
+      this.httpClient.post<TodoItem>(this.apiUrl, newTodo).subscribe({
+        next: (response) => {
+          // Başarılı olursa todoList'e yeni eklenen todo'yu ekleyelim
+          this.todoList.push(response);
+          this.todo = ''; // Giriş alanını temizle
+        },
+        error: (err) => {
+          console.error('Todo eklenirken hata oluştu', err);
+        },
+        complete: () => {
+          console.log('POST işlemi başarılı');
+        },
+      });
     }
   }
 
-  deleteTodo(index: number) {
-    this.todoList.splice(index, 1);
+
+  deleteTodoByName(todoName: string) {
+    this.todoList = this.todoList.filter(todo => todo.title !== todoName);
   }
 }

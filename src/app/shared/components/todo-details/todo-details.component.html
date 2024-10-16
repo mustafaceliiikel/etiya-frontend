@@ -1,0 +1,9 @@
+<div *ngIf="todoDetail">
+  <h2>Todo Detayı</h2>
+  <p><strong>ID:</strong> {{ todoDetail.id }}</p>
+  <p><strong>Başlık:</strong> {{ todoDetail.title }}</p>
+</div>
+
+<div *ngIf="!todoDetail">
+  <p>Todo detayı yükleniyor...</p>
+</div>
