@@ -8,7 +8,7 @@ import { TodoCardComponent } from '../todo-card/todo-card.component';
 @Component({
   selector: 'app-todo-list',
   standalone: true,
-  imports: [FormsModule, CommonModule,TodoCardComponent],
+  imports: [FormsModule, CommonModule, TodoCardComponent],
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
 })
@@ -25,26 +25,24 @@ export class TodoListComponent implements OnInit {
 
   // GET ile todos'ları çekme
   fetchTodos() {
-    this.httpClient
-      .get<TodoItem[]>(this.apiUrl)
-      .subscribe({
-        next: (response: TodoItem[]) => {
-          this.todoList = response.slice(0, 20);
-        },
-        error: (err: any) => {
-          console.log('HATA', err);
-        },
-        complete: () => {
-          console.log('İstek başarılı bitti');
-        },
-      });
+    this.httpClient.get<TodoItem[]>(this.apiUrl).subscribe({
+      next: (response: TodoItem[]) => {
+        this.todoList = response.slice(0, 0);
+      },
+      error: (err: any) => {
+        console.log('HATA', err);
+      },
+      complete: () => {
+        console.log('İstek başarılı bitti');
+      },
+    });
   }
 
   // POST işlemi - Yeni todo ekleme
   addTodo() {
     const trimmedTodo = this.todo.trim();
     if (!trimmedTodo) {
-      alert("Todo boş olamaz!");
+      alert('Todo boş olamaz!');
     } else {
       const newTodo = {
         title: trimmedTodo,
@@ -69,8 +67,7 @@ export class TodoListComponent implements OnInit {
     }
   }
 
-
   deleteTodoByName(todoName: string) {
-    this.todoList = this.todoList.filter(todo => todo.title !== todoName);
+    this.todoList = this.todoList.filter((todo) => todo.title !== todoName);
   }
 }

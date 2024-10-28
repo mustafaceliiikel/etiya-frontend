@@ -1,0 +1,14 @@
+<div class="flex items-center space-x-2">
+  <input
+    type="radio"
+    [name]="groupName"
+    [value]="value"
+    [checked]="isChecked"
+    (change)="handleSelection()"
+    class="hidden peer"
+  />
+  <div
+    class="h-5 w-5 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 cursor-pointer"
+  ></div>
+  <label class="cursor-pointer text-sm font-medium">{{ label }}</label>
+</div>

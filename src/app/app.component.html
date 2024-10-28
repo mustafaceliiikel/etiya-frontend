@@ -1,4 +1,205 @@
 <div>
-  <router-outlet></router-outlet>
-</div>
+  <div class="container mx-auto p-4">
+    <app-input
+      label="Username"
+      placeholder="Enter your username"
+      [type]="'text'"
+      [icon]="'fa fa-user'"
+      [isDisabled]="false"
+      [(ngModel)]="usernameValue"
+    ></app-input>
+  </div>
+  <div>
+    <div
+      class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700"
+    >
+      <input
+        id="bordered-radio-1"
+        type="radio"
+        value=""
+        name="bordered-radio"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      />
+      <label
+        for="bordered-radio-1"
+        class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Default radio</label
+      >
+    </div>
+    <div
+      class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700"
+    >
+      <input
+        checked
+        id="bordered-radio-2"
+        type="radio"
+        value=""
+        name="bordered-radio"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+      />
+      <label
+        for="bordered-radio-2"
+        class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        >Checked state</label
+      >
+    </div>
+  </div>
+  <div>
+    <button
+      class="bg-blue-500 text-white px-4 py-2 rounded"
+      (click)="toggleModal()"
+    >
+      Open Popup
+    </button>
 
+    <app-popup
+      *ngIf="showModal"
+      [modalWidth]="'600px'"
+      [modalHeight]="'400px'"
+      [title]="'You are abandoning the Address Entry Process'"
+      (onClose)="toggleModal()"
+    >
+      <div icon>
+        <div class="w-20 h-20 bg-red-600 rounded-full p-6">!</div>
+      </div>
+      <div content>
+        <!-- Content alanına dinamik HTML veya Angular bileşenleri ekleyebilirsiniz -->
+        <div class="p-4">
+          <p class="text-white">This is dynamic content inside the popup.</p>
+          <div class="flex justify-center gap-4">
+            <button class="bg-green-500 text-white px-4 py-2 rounded mt-2">
+              Click Me
+            </button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded mt-2">
+              Click Me
+            </button>
+          </div>
+        </div>
+      </div>
+    </app-popup>
+  </div>
+  <div class="TABS">
+    <app-tabs [tabs]="tabs" [activeTab]="0">
+      <!-- İlk sekmenin içeriği -->
+      <div tabContent0>
+        <app-input
+          label="First Name"
+          placeholder="Enter your first name"
+        ></app-input>
+        <app-input
+          label="Last Name"
+          placeholder="Enter your last name"
+        ></app-input>
+        <app-input label="Email" placeholder="Enter your email"></app-input>
+      </div>
+
+      <!-- İkinci sekmenin içeriği -->
+      <div tabContent1>
+        <p class="text-gray-500">Bu tabda bir şey yok.</p>
+      </div>
+    </app-tabs>
+  </div>
+  <div class="HEADER">
+    <app-header></app-header>
+  </div>
+  --------------------------------
+  <div class="w-full my-6 sm:flex justify-between">
+    <div
+      class="w-full flex flex-col justify-center items-center sm:w-1/2 p-6 bg-gradient-to-t from-gray-200 to-white"
+    >
+      <p class="text-black font-semibold text-2xl">
+        Sign in with your organizational account
+      </p>
+      <form class="my-4">
+        <div>
+          <app-input
+            label="Username"
+            placeholder="Enter your Username"
+          ></app-input>
+          <app-input
+            type="password"
+            label="Password"
+            placeholder="Enter your Password"
+          ></app-input>
+        </div>
+        <div class="sm:ml-12">
+          <app-button
+            [label]="'Login'"
+            [type]="'primary'"
+            [width]="'150px'"
+            [isDisabled]="false"
+            (onClick)="handleButtonClick()"
+          ></app-button>
+        </div>
+        <div class="flex gap-4 mt-6">
+          <div class="flex gap-2">
+            <input
+              id="default-checkbox"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 mt-1 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <p class="">Remember me</p>
+          </div>
+          <div>
+            <a class="underline" href="Forgot Password">Forgot Password</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="w-full sm:w-1/2">
+      <img
+        class="w-full h-5"
+        src="/src/app/public/images/login-logo.png"
+        alt="Login Logo"
+      />
+    </div>
+  </div>
+  --------------------------------------------------------------------------------------------------------------------------------
+  <div class="container mx-auto p-4">
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              NAT ID Number
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              Customer ID
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              Account Number
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              GSM Number
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              First Name
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              Middle Name
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              Last Name
+            </th>
+            <th class="text-left px-4 py-2 border border-gray-300">
+              Order Number
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="px-4 py-2 border border-gray-300">82222692870</td>
+            <td class="px-4 py-2 border border-gray-300">82222692870</td>
+            <td class="px-4 py-2 border border-gray-300">82222692870</td>
+            <td class="px-4 py-2 border border-gray-300">Ali</td>
+            <td class="px-4 py-2 border border-gray-300">çeçeçeçeç</td>
+            <td class="px-4 py-2 border border-gray-300">ksdmfksdmfksd</td>
+            <td class="px-4 py-2 border border-gray-300">dsfkmdskf</td>
+            <td class="px-4 py-2 border border-gray-300">jsdfjsdmfjmsdj</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
